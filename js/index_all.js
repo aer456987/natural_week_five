@@ -1,12 +1,13 @@
-// import {pagination} from './elements.js';  // 產品畫面可以做元件、購物車也行?
+import { productModal, loadingAnimate } from './elements.js';
 
 const app = Vue.createApp({
   data() {
     return {
       url: 'https://vue3-course-api.hexschool.io',
       pathApi: 'toriha_vuetestapi',
-      loginStatus: false,
-      loginDatas: {
+      loginStatus: false,     // 登入狀態
+      loadingStatus: false,   // loading狀態
+      loginDatas: {           // 登入者資料
         userData: {
           username: '',
           password: '',
@@ -21,17 +22,18 @@ const app = Vue.createApp({
         error: '',
       },
       productsList: {},       // 前端商品列表
-      cart: {
+      product: {              // 單個商品
+      },
+      cart: {                 // 購物車資訊
         cartDatas: [],
         totalQty: 0,
         totalPrice: 0,
-      }
+      },
     }
   },
-  // components: {
-  //   props: ['page'],
-  //   pagination,
-  // },
+  components: {
+    loadingAnimate,   // loading 動畫
+  },
   methods: {
     fromValidateFn(txt){       // 驗證輸入
       const errorStatus = this.errorStatus;
@@ -40,7 +42,6 @@ const app = Vue.createApp({
       if(txt === 'email'){
         loginDatas.isFill = true;
         this.emailValidateFn(errorStatus, loginDatas);
-
       }else if(txt === 'password'){
         loginDatas.isFill = true;
         this.pwValidateFn(errorStatus, loginDatas);
@@ -57,14 +58,12 @@ const app = Vue.createApp({
 
       if (!isMail.test(datas.userData.username)) {
         status.emailErrorMsg = 'email格式錯誤';
-      }
-      else {
+      } else {
         status.isEmailError = false;
       }
     },
     pwValidateFn(status, datas){      // 驗證 密碼 輸入
       const isText = /^[a-zA-Z0-9]+$/;
-      // const include = /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,15}$/;
       const password = datas.userData.password;
       status.isPwError = true;
       datas.isFill = true;
@@ -75,26 +74,25 @@ const app = Vue.createApp({
         status.pwErrorMsg = '請勿少於6個字';
       } else if (password.length > 15) {
         status.pwErrorMsg = '請勿超過15個字';
-      } 
-      // else if (!include.test(password)) {
-      //   status.pwErrorMsg = '至少包括一個大小寫字母或數字';
-      // } 
-      else {
+      } else {
         status.isPwError = false;
       }
     },
     loginFn() {                // 登入事件(希望多個登入提醒)
       const url = `${this.url}/admin/signin`;
       this.loginDatas.error = '資料驗證中，請稍後';
+      this.loadingStatus = true;
 
       axios.post(url, this.loginDatas.userData)
       .then(res => {
         if(res.data.success){
           console.log('登入(成功)', res);
           this.loginDatas.error = '登入成功';
+          this.loadingStatus = false;
         }else{
           console.log('登入(錯誤)', res.data);
           this.loginDatas.error = `${res.data.message}, 請檢察帳號密碼`;
+          this.loadingStatus = false;
           return;
         }
 
@@ -104,62 +102,97 @@ const app = Vue.createApp({
         })
         .catch(err => {
           console.dir('登入(失敗)', err);
+          this.loadingStatus = false;
         })
     },
     logout() {                 // 登出事件(希望多個登出提醒)
-      const url = `${this.url}/logout`
+      const url = `${this.url}/logout`;
+      this.loadingStatus = true;
 
       axios.post(url)
         .then(res => {
           console.log(res);
           if(res.data.success){
             console.log('帳號登出(成功)', res);
+            this.loadingStatus = false;
             this.loginStatus = false;
           }else{
             console.log('帳號登出(錯誤)', res);
+            this.loadingStatus = false;
             this.loginStatus = true;
           }
         })
         .catch(err => {
           console.dir('帳號登出(失敗)', err);
+          this.loadingStatus = false;
         })
     },
     checkLogin() {             // axios check 確認登入狀態
       const url = `${this.url}/api/user/check`;
+      this.loadingStatus = true;
 
       axios.post(url)
         .then(res => {
           if(res.data.success){
             console.log('前台帳號認證(成功)', res);
             this.loginStatus = true;
+            this.loadingStatus = false;
           }else{
             console.log('前台帳號認證(錯誤)', res);
             this.loginStatus = false;
+            this.loadingStatus = false;
           }
         })
         .catch(err => {
           console.dir('前台帳號認證(失敗)', err);
+          this.loadingStatus = false;
         })
     },
-    getData(){         // 取得前端資料
+    getData(){                 // 取得前端資料
       const url = `${this.url}/api/${this.pathApi}/products/all`;
+      this.loadingStatus = true;
 
       axios.get(url)
         .then(res => {
           if(res.data.success){
-            console.log('取得this資料(成功)', res);
             console.log('前台資料取得(全部資料)', res);
             this.productsList = res.data.products;
+            this.loadingStatus = false;
           }else{
             console.log('前台資料取得(錯誤)', res.data);
+            this.loadingStatus = false;
           }
         })
         .catch(err => {
-          console.log('前台資料取得(失敗)', err)
+          console.log('前台資料取得(失敗)', err);
+          this.loadingStatus = false;
+        })
+    },
+    openModal(item) {          // 打開單頁商品
+      const api = `${this.url}/api/${this.pathApi}/product/${item.id}`;
+      this.loadingStatus = true;
+
+      axios.get(api)
+        .then(res=> {
+          if(res.data.success){
+            console.log('取得單頁資料(成功)', res);
+            this.product = res.data.product;          // 將取得的單個商品資料存起來
+            this.$refs.userProductModal.openModal();  // 使用元件內部的openModal方法 
+            this.loadingStatus = false;
+          }else{
+            console.log('取得單頁資料(錯誤)', res.data);
+            this.loadingStatus = false;
+          }
+        })
+        .catch(err => {
+          console.log('取得單頁資料(失敗)', err);
+          this.loadingStatus = false;
         })
     },
     getCatrDatas() {           // 取得購物車資料
       const url = `${this.url}/api/${this.pathApi}/cart`;
+      this.loadingStatus = true;
+
       axios.get(url)
         .then(res => {
           if(res.data.success){
@@ -167,13 +200,16 @@ const app = Vue.createApp({
             console.log('前台購物車this資料取得(成功)', this.cart.cartDatas);
             this.cart.cartDatas = res.data.data.carts;
             this.cart.totalPrice = res.data.data.total;
+            this.loadingStatus = false;
             this.countCartNum();
           }else{
             console.log('前台購物車取得(錯誤)', res.data);
+            this.loadingStatus = false;
           }
         })
         .catch(err => {
-          console.log('前台購物車取得(失敗)', err)
+          console.log('前台購物車取得(失敗)', err);
+          this.loadingStatus = false;
         })
     },
     addCart(id, num = 1) {     // 加入購物車
@@ -182,6 +218,7 @@ const app = Vue.createApp({
         "product_id": id,
         "qty": num,
       }
+      this.loadingStatus = true;
 
       axios.post(url, {"data": datas})
         .then(res => {
@@ -189,31 +226,36 @@ const app = Vue.createApp({
             console.log('加入購物車(成功)', res);
             this.swalFn(res.data.message, 'success');
             this.getCatrDatas();
+            this.$refs.userProductModal.hideModal();
+            this.loadingStatus = false;
           }else{
             console.log('加入購物車(錯誤)', res.data);
             this.swalFn(res.data.message, 'error');
+            this.loadingStatus = false;
           }
         })
         .catch(err => {
-          console.log('加入購物車(失敗)', err)
+          console.log('加入購物車(失敗)', err);
+          this.loadingStatus = false;
         })
-
     },
-    putCart(action, id, num) {     // 加入購物車
-      const url = `${this.url}/api/${this.pathApi}/cart/${id}`;
-      let newNum = num;
+    putCart(action, item) {    // 修改購物車
+      const url = `${this.url}/api/${this.pathApi}/cart/${item.id}`;
+      let newNum = item.qty;
+      this.loadingStatus = true;
 
       if (action === 'reduce'){
-        if(num === 1){
+        if(item.qty === 1){
           this.swalFn('數量不可少於1', 'error');
-          return
+          this.loadingStatus = false;
+          return;
         }
         newNum -= 1;
       }else if(action === 'add'){
         newNum += 1;
       }
 
-      let datas = { "product_id": id, "qty": newNum }
+      let datas = { "product_id": item.id, "qty": newNum }
 
       axios.put(url, {"data": datas})
         .then(res => {
@@ -221,28 +263,30 @@ const app = Vue.createApp({
             console.log('修改購物車數量(成功)', res);
             this.swalFn(res.data.message, 'success');
             this.getCatrDatas();
+            this.loadingStatus = false;
           }else{
             console.log('修改購物車數量(錯誤)', res.data);
             this.swalFn(res.data.message, 'error');
+            this.loadingStatus = false;
           }
         })
         .catch(err => {
-          console.log('修改購物車數量(失敗)', err)
+          console.log('修改購物車數量(失敗)', err);
+          this.loadingStatus = false;
         })
-
     },
-    delCart(action, id, name){
+    delCart(action, item){     // 刪除購物車
       let url = ``;
       let productName = '';
+      this.loadingStatus = true;
+
       if(action === 'one'){
-        url = `${this.url}/api/${this.pathApi}/cart/${id}`;
-        productName = name;
-        // console.log(id);
+        url = `${this.url}/api/${this.pathApi}/cart/${item.id}`;
+        productName = item.product.title;
 
       } else if (action === 'all'){
         url = `${this.url}/api/${this.pathApi}/carts`;
         productName = '全部商品';
-        // console.log('刪除全部');
       }
 
       axios.delete(url)
@@ -251,13 +295,16 @@ const app = Vue.createApp({
             console.log('刪除購物車(成功)', res);
             this.swalFn(`${productName} ${res.data.message}`, 'success')
             this.getCatrDatas();
+            this.loadingStatus = false;
           }else{
             console.log('刪除購物車(錯誤)', res.data);
             this.swalFn(res.data.message, 'error');
+            this.loadingStatus = false;
           }
         })
         .catch(err => {
-          console.log('刪除購物車(失敗)', err)
+          console.log('刪除購物車(失敗)', err);
+          this.loadingStatus = false;
         })
     },
     countCartNum(){            // 計算購物車總數
@@ -266,14 +313,14 @@ const app = Vue.createApp({
         this.cart.totalQty += item.qty;
       });
     },
-    swalFn(title, icon, timer = 2000, text, button = false) {             // 一般提示視窗
-      // success (成功) ； error (叉叉) ； warning(警告) ； info (說明)
+    swalFn(title, icon, timer = 2000, text, button = false) {    // 一般提示視窗
       const txt = {
         title,
         text,
         icon,
         button,
         timer,
+        closeOnClickOutside : false
       };
       swal(txt);
     }
@@ -281,13 +328,11 @@ const app = Vue.createApp({
   mounted() {
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
     axios.defaults.headers.common.Authorization = token;
-
     this.checkLogin();
     this.getData();
     this.getCatrDatas();
   }
 });
-
-
+app.component('userProductModal', productModal)      // 元件註冊('元件自訂名稱', 載入的元件內容)
 
 app.mount('.js_index');
