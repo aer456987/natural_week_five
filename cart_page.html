@@ -101,7 +101,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in cart.cartDatas" :key="item.id">
+                  <tr v-for="item in cart.cartDatas.carts" :key="item.id">
                     <td>
                       <div style="width: 100px; height: 60px; overflow: hidden;">
                         <img :src="item.product.imageUrl" alt="預覽"
@@ -136,7 +136,7 @@
                   </tr>
                 </tbody>
               </table>
-              <h5 class="text-end text-danger fw-bold">總金額NT ${{ cart.totalPrice }}</h5>
+              <h5 class="text-end text-danger fw-bold">總金額NT ${{ cart.cartDatas.final_total }}</h5>
             </div>
 
             <!-- 繼續購物/清空購物車 -->
@@ -144,13 +144,13 @@
               <a href="./product_page.html" class="btn btn-outline-warning"> <span>◁</span> 繼續購物 </a>
 
               <a class="btn btn-outline-dark" 
-                :class="{ 'disabled' : !cart.cartDatas.length }"
+                :class="{ 'disabled' : !cart.totalQty>0 }"
                 @click="delCart('all')">
                 清空購物車
               </a>
 
               <a href="./order_page.html" class="btn btn-success"
-                :class="{ 'disabled' : !cart.cartDatas.length }">
+                :class="{ 'disabled' : !cart.totalQty>0 }">
                 填寫訂單 <span>▶</span> 
               </a>
             </div>

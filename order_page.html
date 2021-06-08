@@ -124,7 +124,7 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="item in cart.cartDatas" :key="item.id">
+                    <tr v-for="item in cart.cartDatas.carts" :key="item.id">
                       <th scope="row">
                         {{ item.product.title }}
                       </th>
@@ -135,7 +135,7 @@
                     </tr>
                   </tbody>
                 </table>
-                <h5 class="text-center text-danger fw-bold">總金額NT ${{ cart.totalPrice }}</h5>
+                <h5 class="text-center text-danger fw-bold">總金額NT ${{ cart.cartDatas.final_total }}</h5>
               </div>
             </div>
 
@@ -385,7 +385,6 @@
           </div>
         </div>
       </main>
-
     </div>
 
     <footer class="p-4 bg-dark">

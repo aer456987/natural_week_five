@@ -27,7 +27,6 @@ const app = Vue.createApp({
       cart: {                 // 購物車資訊
         cartDatas: [],
         totalQty: 0,
-        totalPrice: 0,
       },
     }
   },
@@ -148,7 +147,7 @@ const app = Vue.createApp({
           this.loadingStatus = false;
         })
     },
-    getData(){                 // 取得前端資料
+    getDatas(){                // 取得前端資料
       const url = `${this.url}/api/${this.pathApi}/products/all`;
       this.loadingStatus = true;
 
@@ -198,8 +197,7 @@ const app = Vue.createApp({
           if(res.data.success){
             console.log('前台購物車取得(全部資料)', res);
             console.log('前台購物車this資料取得(成功)', this.cart.cartDatas);
-            this.cart.cartDatas = res.data.data.carts;
-            this.cart.totalPrice = res.data.data.total;
+            this.cart.cartDatas = res.data.data;
             this.loadingStatus = false;
             this.countCartNum();
           }else{
@@ -238,6 +236,7 @@ const app = Vue.createApp({
           console.log('加入購物車(失敗)', err);
           this.loadingStatus = false;
         })
+
     },
     putCart(action, item) {    // 修改購物車
       const url = `${this.url}/api/${this.pathApi}/cart/${item.id}`;
@@ -274,6 +273,7 @@ const app = Vue.createApp({
           console.log('修改購物車數量(失敗)', err);
           this.loadingStatus = false;
         })
+
     },
     delCart(action, item){     // 刪除購物車
       let url = ``;
@@ -309,7 +309,7 @@ const app = Vue.createApp({
     },
     countCartNum(){            // 計算購物車總數
       this.cart.totalQty = 0;
-      this.cart.cartDatas.forEach(item => {
+      this.cart.cartDatas.carts.forEach(item => {
         this.cart.totalQty += item.qty;
       });
     },
@@ -329,7 +329,7 @@ const app = Vue.createApp({
     const token = document.cookie.replace(/(?:(?:^|.*;\s*)hexToken\s*\=\s*([^;]*).*$)|^.*$/, '$1');
     axios.defaults.headers.common.Authorization = token;
     this.checkLogin();
-    this.getData();
+    this.getDatas();
     this.getCatrDatas();
   }
 });

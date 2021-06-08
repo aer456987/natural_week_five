@@ -10,6 +10,7 @@ VeeValidate.configure({
   validateOnInput: true, // 調整為輸入字元立即進行驗證
 });
 
+
 const app = Vue.createApp({
   data() {
     return {
@@ -36,7 +37,7 @@ const app = Vue.createApp({
       orderStatus: false,     // 訂單填寫完成狀態
       isPay: false,           // 付款狀態
       orderId: '',
-      orderData: {},
+      orderData: {},          // 單一訂單
     }
   },
   components: {
@@ -45,7 +46,6 @@ const app = Vue.createApp({
   methods: {
     checkUserDatas(){         // 驗證是否為空訂單
       const user = this.userDatas.user;
-      console.log(123);
       if( user.name === '' || user.email === '' || user.tel === '' || user.address === '' ){
         this.isData = false;
       }else{
@@ -99,8 +99,7 @@ const app = Vue.createApp({
           if(res.data.success){
             console.log('前台購物車取得(全部資料)', res);
             console.log('前台購物車this資料取得(成功)', this.cart.cartDatas);
-            this.cart.cartDatas = res.data.data.carts;
-            this.cart.totalPrice = res.data.data.total;
+            this.cart.cartDatas = res.data.data;
             this.loadingStatus = false;
           }else{
             console.log('前台購物車取得(錯誤)', res.data);
@@ -139,7 +138,7 @@ const app = Vue.createApp({
           this.loadingStatus = false;
         })
     },
-    getOrder(){
+    getOrder(){             // 送出單筆訂單
       const url = `${this.url}/api/${this.pathApi}/order/${this.orderId}`;
       this.loadingStatus = true;
 
@@ -161,7 +160,7 @@ const app = Vue.createApp({
           this.loadingStatus = false;
         })
     },
-    goPay() {
+    goPay() {               // 前往付款
       const url = `${this.url}/api/${this.pathApi}/pay/${this.orderId}`;
       this.loadingStatus = true;
 
@@ -184,7 +183,6 @@ const app = Vue.createApp({
         })
     },
     swalFn(title, icon, timer = 2000, text, button = false) {    // 一般提示視窗
-      // success (成功) ； error (叉叉) ； warning(警告) ； info (說明)
       const txt = {
         title,
         text,
