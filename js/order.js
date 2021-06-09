@@ -111,7 +111,7 @@ const app = Vue.createApp({
           this.loadingStatus = false;
         })
     },
-    postOrder() {           // 送出訂單
+    postOrder() {           // 送出單筆訂單
       const url = `${this.url}/api/${this.pathApi}/order`;
       console.log(this.userDatas);
       this.loadingStatus = true;
@@ -120,25 +120,22 @@ const app = Vue.createApp({
         .then(res => {
           if(res.data.success){
             console.log('送出訂單(全部資料)', res);
-            this.swalFn('訂單已送出', 'success', 3500, `訂單號碼：${res.data.orderId}`);
+            this.swalFn('訂單已送出', 'success', 2500, `訂單號碼：${res.data.orderId}`);
             this.orderId = res.data.orderId;
-            this.orderStatus = true;
             this.getOrder();
             this.loadingStatus = false;
           }else{
             console.log('送出訂單(錯誤)', res.data);
-            this.orderStatus = false;
             this.loadingStatus = false;
           }
         })
         .catch(err => {
           console.log('送出訂單(失敗)', err)
           console.dir('送出訂單(失敗)', err)
-          this.orderStatus = false;
           this.loadingStatus = false;
         })
     },
-    getOrder(){             // 送出單筆訂單
+    getOrder(){             // 取得訂單
       const url = `${this.url}/api/${this.pathApi}/order/${this.orderId}`;
       this.loadingStatus = true;
 
@@ -149,14 +146,17 @@ const app = Vue.createApp({
             console.log('取得單筆訂單(成功)', res.data.order);
             this.orderData = JSON.parse(JSON.stringify(res.data.order));
             console.log(this.orderData);
+            this.orderStatus = true;
             this.loadingStatus = false;
           }else{
             console.log('取得單筆訂單(錯誤)', res);
+            this.orderStatus = false;
             this.loadingStatus = false;
           }
         })
         .catch(err => {
           console.dir('取得單筆訂單(失敗)', err);
+          this.orderStatus = false;
           this.loadingStatus = false;
         })
     },
