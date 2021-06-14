@@ -5,7 +5,8 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>第五週主線任務-訂單頁面</title>
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
   <link rel="stylesheet" href="css/init/init_style.css">
   <link rel="stylesheet" href="css/style.css">
@@ -22,7 +23,8 @@
             natural
           </a>
           <div class="nav_lists">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse mr-0" id="navbarNav">
@@ -32,16 +34,6 @@
                 </li>
                 <li class="nav-item">
                   <a class="nav-link px-3" href="./product_page.html">線上商城</a>
-                </li>
-                <li class="hover_scale12 d-flex" v-if="loginStatus">
-                  <a class="px-3 py-2" 
-                    href="backstage_products.html">進入後台</a>
-                  <a class="px-3 py-2" @click="logout">登出</a>
-                </li>
-                <li class="nav-item" title="管理員登入" v-else="!loginStatus">
-                  <a class="nav-link px-3" href="./login_page.html">
-                    <i class="fas fa-user-tie"></i>
-                  </a>
                 </li>
               </ul>
             </div>
@@ -58,18 +50,15 @@
 
       <!-- 未付款的畫面 -->
       <main class="px-5 pt-3 pb-5" v-if="!isPay">
-        <nav 
-          style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" 
+        <nav
+          style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
           aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="./index.html">首頁</a></li>
             <li class="breadcrumb-item"><a href="./cart_page.html">購物車</a></li>
-            <li class="breadcrumb-item active" aria-current="page" 
-              v-if="!orderStatus">訂單填寫</li>
-            <li class="breadcrumb-item" 
-              v-if="orderStatus">訂單填寫</li>
-            <li class="breadcrumb-item active" aria-current="page" 
-              v-if="orderStatus">訂單確認</li>
+            <li class="breadcrumb-item active" aria-current="page" v-if="!orderStatus">訂單填寫</li>
+            <li class="breadcrumb-item" v-if="orderStatus">訂單填寫</li>
+            <li class="breadcrumb-item active" aria-current="page" v-if="orderStatus">訂單確認</li>
           </ol>
         </nav>
 
@@ -77,25 +66,18 @@
         <div class="py-3">
           <div class="position-relative m-5">
             <div class="progress progress_yellow" style="height: 3px;">
-              <div 
-                class="progress-bar progress_green" 
-                role="progressbar" 
-                style="width: 50%;" 
-                aria-valuenow="50" 
-                aria-valuemin="0" 
-                aria-valuemax="100"></div>
+              <div class="progress-bar progress_green" role="progressbar" style="width: 50%;" aria-valuenow="50"
+                aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <div 
-              class="position-absolute top-0 start-0 translate-middle progress_style progress_green">
+            <div class="position-absolute top-0 start-0 translate-middle progress_style progress_green">
               <i class="bi bi-cart4"></i>
             </div>
-            <div 
+            <div
               class="position-absolute top-0 start-50 translate-middle progress_style progress_green progress_active">
               <i class="bi bi-card-list" v-if="!orderStatus"></i>
               <i class="bi bi-card-checklist" v-else="orderStatus"></i>
             </div>
-            <div 
-              class="position-absolute top-0 start-100 translate-middle progress_style progress_yellow">
+            <div class="position-absolute top-0 start-100 translate-middle progress_style progress_yellow">
               <i class="bi bi-credit-card"></i>
             </div>
           </div>
@@ -107,8 +89,7 @@
 
         <div class="container">
           <!-- (1) 訂單填寫 -->
-          <div class="row px-5 align-items-center"
-            v-if="!orderStatus">
+          <div class="row px-5 align-items-center" v-if="!orderStatus">
             <!-- 購物明細 -->
             <div class="col-5">
               <div class="table_style w-100 px-3 py-5 mb-5 border rounded shadow-sm">
@@ -142,67 +123,35 @@
               <h5 class="text-center fw-bold mb-4">訂購人資訊</h5>
               <v-form v-slot="{ errors }" class="px-3" @change="checkUserDatas">
                 <!-- 訂購人姓名 -->
-                <label for="orderName" class="form-label mt-2 mb-1 fw-bold">訂購人姓名*</label> 
-                <v-field 
-                  type="text" 
-                  id="orderName" 
-                  name="姓名" 
-                  class="form-control mb-3" 
-                  :class="{ 'is-invalid': errors['姓名'] }"
-                  rules="required" 
-                  v-model="userDatas.user.name"
-                  ></v-field>
+                <label for="orderName" class="form-label mt-2 mb-1 fw-bold">訂購人姓名*</label>
+                <v-field type="text" id="orderName" name="姓名" class="form-control mb-3"
+                  :class="{ 'is-invalid': errors['姓名'] }" rules="required" v-model="userDatas.user.name"></v-field>
                 <error-message name="姓名" class="invalid-feedback"></error-message>
 
                 <!-- 聯絡電話 -->
-                <label for="orderTel" class="form-label mt-2 mb-1 fw-bold">聯絡電話*</label> 
-                <v-field 
-                  type="tel" 
-                  id="orderTel" 
-                  name="電話" 
-                  class="form-control mb-3" 
-                  :class="{ 'is-invalid': errors['電話'] }"
-                  rules="required|numeric|min_value:8"
-                  v-model="userDatas.user.tel"
-                  ></v-field>
+                <label for="orderTel" class="form-label mt-2 mb-1 fw-bold">聯絡電話*</label>
+                <v-field type="tel" id="orderTel" name="電話" class="form-control mb-3"
+                  :class="{ 'is-invalid': errors['電話'] }" rules="required|numeric|min:8" v-model="userDatas.user.tel">
+                </v-field>
                 <error-message name="電話" class="invalid-feedback"></error-message>
 
                 <!-- Email -->
-                <label for="orderEmail" class="form-label mt-2 mb-1 fw-bold">Email*</label> 
-                <v-field 
-                  type="email" 
-                  id="orderEmail" 
-                  name="Email" 
-                  class="form-control mb-3" 
-                  :class="{ 'is-invalid': errors['Email'] }"
-                  rules="required|email" 
-                  v-model="userDatas.user.email"
-                  ></v-field>
+                <label for="orderEmail" class="form-label mt-2 mb-1 fw-bold">Email*</label>
+                <v-field type="email" id="orderEmail" name="Email" class="form-control mb-3"
+                  :class="{ 'is-invalid': errors['Email'] }" rules="required|email" v-model="userDatas.user.email">
+                </v-field>
                 <error-message name="Email" class="invalid-feedback"></error-message>
 
                 <!-- 寄送地址 -->
-                <label for="orderAddress" class="form-label mt-2 mb-1 fw-bold">寄送地址*</label> 
-                <v-field 
-                  type="text" 
-                  id="orderAddress" 
-                  name="地址" 
-                  class="form-control mb-3" 
-                  :class="{ 'is-invalid': errors['地址'] }"
-                  rules="required" 
-                  v-model="userDatas.user.address"
-                  ></v-field>
+                <label for="orderAddress" class="form-label mt-2 mb-1 fw-bold">寄送地址*</label>
+                <v-field type="text" id="orderAddress" name="地址" class="form-control mb-3"
+                  :class="{ 'is-invalid': errors['地址'] }" rules="required" v-model="userDatas.user.address"></v-field>
                 <error-message name="地址" class="invalid-feedback"></error-message>
 
                 <!-- 備註 -->
-                <label for="orderMsg" class="form-label mt-2 mb-1 fw-bold">備註</label> 
-                <v-field 
-                  as="textarea"
-                  id="orderMsg" 
-                  name="備註" 
-                  class="form-control mb-3" 
-                  :class="{ 'is-invalid': errors['備註'] }"
-                  v-model="userDatas.message"
-                  ></v-field>
+                <label for="orderMsg" class="form-label mt-2 mb-1 fw-bold">備註</label>
+                <v-field as="textarea" id="orderMsg" name="備註" class="form-control mb-3"
+                  :class="{ 'is-invalid': errors['備註'] }" v-model="userDatas.message"></v-field>
                 <error-message name="備註" class="invalid-feedback"></error-message>
               </v-form>
             </div>
@@ -211,15 +160,13 @@
             <div class="col-12 d-flex justify-content-between">
               <a href="./cart_page.html" class="btn btn-outline-warning"> <span>◁</span> 返回購物車 </a>
 
-              <a class="btn btn-success"
-                :class="{ 'disabled' : !isData }" 
-                @click.preven="postOrder">送出訂單 <span>▶</span> </a>
+              <a class="btn btn-success" :class="{ 'disabled' : !isData }" @click.preven="postOrder">送出訂單 <span>▶</span>
+              </a>
             </div>
           </div>
 
           <!-- (2) 訂單明細&付款 -->
-          <div class="row px-md-1 px-lg-5 justify-content-center"
-            v-else="orderStatus">
+          <div class="row px-md-1 px-lg-5 justify-content-center" v-else="orderStatus">
             <!-- 訂單明細 -->
             <div class="col-md-12 col-lg-9">
               <div class="px-5 py-5 mb-5 border rounded shadow">
@@ -232,8 +179,7 @@
                 <table class="table table-borderless mb-5">
                   <tbody>
                     <tr>
-                      <th colspan="2" scope="row" 
-                        class="text-center border-end border">
+                      <th colspan="2" scope="row" class="text-center border-end border">
                         訂購人資訊
                       </th>
                     </tr>
@@ -281,25 +227,18 @@
                 <table class="table table-borderless mb-5">
                   <tbody>
                     <tr>
-                      <th colspan="3" scope="row" 
-                        class="text-center border-end border">
+                      <th colspan="3" scope="row" class="text-center border-end border">
                         商品項目
                       </th>
                     </tr>
                   </tbody>
                   <tbody v-for="item in orderData.products">
                     <tr>
-                      <th 
-                        scope="row" 
-                        colspan="2" 
-                        class="text-end border-end pe-sm-0 pe-md-4" 
-                        width="50%">
+                      <th scope="row" colspan="2" class="text-end border-end pe-sm-0 pe-md-4" width="50%">
                         {{ item.product.title }}
                         × {{ item.qty }}
                       </th>
-                      <td 
-                        class="ps-sm-0 ps-md-4"
-                        width="50%">
+                      <td class="ps-sm-0 ps-md-4" width="50%">
                         NT ${{ item.total }}
                       </td>
                     </tr>
@@ -313,8 +252,7 @@
 
             <!-- 我要付款 -->
             <div class="col-12 d-flex justify-content-center mb-5">
-              <a class="btn btn-success"
-                @click.preven="goPay">我要付款</a>
+              <a class="btn btn-success" @click.preven="goPay">我要付款</a>
             </div>
           </div>
         </div>
@@ -323,13 +261,13 @@
 
       <!-- 已經付款的畫面 -->
       <main class="px-5 pt-3 pb-5" v-else="isPay">
-        <nav 
-          style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);" 
+        <nav
+          style="--bs-breadcrumb-divider: url(&#34;data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8'%3E%3Cpath d='M2.5 0L1 1.5 3.5 4 1 6.5 2.5 8l4-4-4-4z' fill='currentColor'/%3E%3C/svg%3E&#34;);"
           aria-label="breadcrumb">
           <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="./index.html">首頁</a></li>
             <li class="breadcrumb-item"><a href="./cart_page.html">購物車</a></li>
-              <li class="breadcrumb-item active" aria-current="page">付款完成</li>
+            <li class="breadcrumb-item active" aria-current="page">付款完成</li>
           </ol>
         </nav>
 
@@ -337,23 +275,16 @@
         <div class="py-3">
           <div class="position-relative m-5">
             <div class="progress progress_yellow" style="height: 3px;">
-              <div 
-                class="progress-bar progress_green" 
-                role="progressbar" 
-                style="width: 100%;" 
-                aria-valuenow="100" 
-                aria-valuemin="0" 
-                aria-valuemax="100"></div>
+              <div class="progress-bar progress_green" role="progressbar" style="width: 100%;" aria-valuenow="100"
+                aria-valuemin="0" aria-valuemax="100"></div>
             </div>
-            <div 
-              class="position-absolute top-0 start-0 translate-middle progress_style progress_green">
+            <div class="position-absolute top-0 start-0 translate-middle progress_style progress_green">
               <i class="bi bi-cart4"></i>
             </div>
-            <div 
-              class="position-absolute top-0 start-50 translate-middle progress_style progress_green">
+            <div class="position-absolute top-0 start-50 translate-middle progress_style progress_green">
               <i class="bi bi-card-checklist"></i>
             </div>
-            <div 
+            <div
               class="position-absolute top-0 start-100 translate-middle progress_style progress_green progress_active">
               <i class="bi bi-credit-card"></i>
             </div>
@@ -375,7 +306,6 @@
                 </p>
                 <p>
                   如需紙本收據或發票，可至會員中心修改發票設定。 <br>
-                  
                 </p>
               </div>
             </div>
@@ -392,8 +322,13 @@
   </div>
 
 
-  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js" integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous"></script>
-  <script script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"
+    integrity="sha384-q2kxQ16AaE6UbzuKqyBE9/u/KzioAlnx2maXQHiDX9d4/zp8Ok3f+M7DPm+Ib6IU" crossorigin="anonymous">
+  </script>
+  <script script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.min.js"
+    integrity="sha384-pQQkAEnwaBkjpqZ8RU1fF1AKtTcHJwFl3pblpTlHXybJjHpMYo79HY3hIi4NKxyj" crossorigin="anonymous">
+  </script>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.2/vue.global.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vee-validate/4.1.17/vee-validate.min.js"></script>

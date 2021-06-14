@@ -156,6 +156,10 @@ tbody th, tbody td {
   font-size: 22px;
 }
 
+.list-group {
+  cursor: pointer;
+}
+
 .index {
   position: relative;
   overflow: hidden;

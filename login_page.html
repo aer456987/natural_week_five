@@ -5,14 +5,15 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>第五週主線任務-登入頁面</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
-  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+    integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
   <link rel="stylesheet" href="css/login.css">
 </head>
 
 <body>
   <div class="js_index index">
-    <loading-animate :status="loadingStatus"></loading-animate>
 
     <nav class="navbar navbar-expand-lg bg-secondary navbar-dark px-5">
       <div class="container">
@@ -22,7 +23,8 @@
             natural
           </a>
           <div class="nav_lists">
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+              aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse mr-0" id="navbarNav">
@@ -31,7 +33,8 @@
                   <a class="nav-link px-3" href="./index.html" aria-current="page">首頁</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link px-3 disabled" href="./product_page.html" tabindex="-1" aria-disabled="true">線上商城</a>
+                  <a class="nav-link px-3 disabled" href="./product_page.html" tabindex="-1"
+                    aria-disabled="true">線上商城</a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link px-3" href="./backstage_products.html" v-if="loginStatus">進入後台</a>
@@ -48,7 +51,6 @@
         </div>
       </div>
     </nav>
-  
     <!-- login_page -->
     <section class="container p-5">
 
@@ -63,16 +65,10 @@
                 <div class="row mb-4">
                   <label for="email_input" class="col-xl-2 col-md-12 col-form-label px-2">帳號</label>
                   <div class="col-xl-10 col-md-12">
-                    <input type="email" 
-                      name="email" 
-                      placeholder="請輸入帳號" 
-                      id="email_input" 
-                      class="form-control" 
-                      :class="{ 'border-danger' : errorStatus.isEmailError}" 
-                      v-model="loginDatas.userData.username" 
+                    <input type="email" name="email" placeholder="請輸入帳號" id="email_input" class="form-control"
+                      :class="{ 'border-danger' : errorStatus.isEmailError}" v-model="loginDatas.userData.username"
                       @change="fromValidateFn('email')">
-                    <p class="email text-danger text-end m-0 mt-1"
-                      v-if="errorStatus.isEmailError">
+                    <p class="email text-danger text-end m-0 mt-1" v-if="errorStatus.isEmailError">
                       {{ errorStatus.emailErrorMsg }}
                     </p>
                   </div>
@@ -81,22 +77,14 @@
                 <div class="row mb-4">
                   <label for="pw_input" class="col-xl-2 col-md-12 col-form-label px-2">密碼</label>
                   <div class="col-xl-10 col-md-12">
-                    <input type="password" 
-                      name="password" 
-                      placeholder="請輸入密碼" 
-                      id="pw_input" 
-                      class="form-control" 
-                      :class="{ 'border-danger' : errorStatus.isPwError}" 
-                      v-model="loginDatas.userData.password" 
+                    <input type="password" name="password" placeholder="請輸入密碼" id="pw_input" class="form-control"
+                      :class="{ 'border-danger' : errorStatus.isPwError}" v-model="loginDatas.userData.password"
                       @change="fromValidateFn('password')">
-                    <p class="password text-danger text-end m-0 mt-1"
-                      v-if="errorStatus.isPwError">
+                    <p class="password text-danger text-end m-0 mt-1" v-if="errorStatus.isPwError">
                       {{ errorStatus.pwErrorMsg }}
                     </p>
                   </div>
-                  
                 </div>
-    
                 <div class="col-12 text-end">
                   <p class="text-danger text-center">
                     {{ loginDatas.error }}
@@ -108,14 +96,15 @@
           </div>
         </div>
       </div>
-
-    </section>  
+    </section>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous">
+  </script>
   <script src="//cdnjs.cloudflare.com/ajax/libs/validate.js/0.13.1/validate.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.1/axios.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/3.0.2/vue.global.js"></script>
-  <script src="js/index_all.js"></script>
+  <script src="js/login.js"></script>
 </body>
 </html>
